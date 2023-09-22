@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:15.3
+    volumes:
+      - ./volumes/pgdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5555:5432"
+
+  nats:
+    image: nats-streaming:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222"

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Отображение данных заказа</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>Отображение данных заказа</h1>
+
+<form id="orderForm">
+    <label for="orderId">Введите ID заказа:</label>
+    <input type="text" id="orderId" name="orderId" required>
+    <button type="submit">Получить данные</button>
+</form>
+
+<div id="orderData"></div>
+
+<script>
+    document.getElementById('orderForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const orderId = document.getElementById('orderId').value;
+        fetch('http://localhost:3333/getOrder?id=' + orderId)
+            .then(response => response.json())
+            .then(data => {
+                const orderDataElement = document.getElementById('orderData');
+                orderDataElement.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                const orderDataElement = document.getElementById('orderData');
+                orderDataElement.innerHTML = '<p>Error: ' + error + '</p>';
+            });
+    });
+</script>
+</body>
+</html>
