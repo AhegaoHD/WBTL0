@@ -1,4 +1,4 @@
-package pg
+package model
 
 type Order struct {
 	Order_uid          string   `json:"order_uid"`

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"WB_Tech_level_0/pg"
+	"WB_Tech_level_0/model"
 	"encoding/json"
 	"fmt"
 
@@ -33,8 +33,8 @@ func main() {
 	}
 
 }
-func getExampleOrder() pg.Order {
-	var ord pg.Order
+func getExampleOrder() model.Order {
+	var ord model.Order
 	exampleFile, err := os.Open("example.json")
 	jsonParser := json.NewDecoder(exampleFile)
 	if err = jsonParser.Decode(&ord); err != nil {
