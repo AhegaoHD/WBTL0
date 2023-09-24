@@ -1,30 +1,32 @@
 package main
 
 import (
-	"WB_Tech_level_0/model"
 	"encoding/json"
 	"fmt"
+	"github.com/AhegaoHD/WBTL0/internal/model"
+	"github.com/nats-io/stan.go"
+	"log"
 
-	"github.com/nats-io/nats.go"
 	"os"
 	"strconv"
 	"time"
 )
 
 func main() {
-	nc, err := nats.Connect("127.0.0.1:4222")
+	sc, err := stan.Connect("test-cluster", "publisher-1", stan.NatsURL("127.0.0.1:4222"))
 	if err != nil {
-		panic(err)
+		log.Fatalf("Error connecting to NATS Streaming: %v", err)
 	}
-	defer nc.Close()
-	order := getExampleOrder()
-	id := order.Order_uid
-	subject := "subject"
+	defer sc.Close()
 
+	order := getExampleOrder()
+	subject := "subject"
+	id := order.Order_uid
 	for i := 1; ; i++ {
 		order.Order_uid = id + strconv.Itoa(i)
+		order.Items[0].ChrtId = i
 		orderM, _ := json.Marshal(order)
-		err := nc.Publish(subject, orderM)
+		err := sc.Publish(subject, orderM)
 		fmt.Printf("send %s \n", order.Order_uid)
 		if err != nil {
 			fmt.Println(err)

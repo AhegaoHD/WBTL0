@@ -28,7 +28,7 @@
     document.getElementById('orderForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const orderId = document.getElementById('orderId').value;
-        fetch('http://localhost:3333/getOrder?id=' + orderId)
+        fetch('http://localhost:8080/order?id=' + orderId)
             .then(response => response.json())
             .then(data => {
                 const orderDataElement = document.getElementById('orderData');

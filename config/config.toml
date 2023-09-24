@@ -1,0 +1,16 @@
+[Application]
+Name = "WBTL0"
+Version = "1.0.0"
+
+[DB]
+Name = "WB_Tech_level_0"
+Host = "localhost"
+Port = "5555"
+Schema = "public"
+MaxPoolSize = 10
+
+[HttpServer]
+ShutdownTimeout = 5
+
+[Nats]
+URL = "localhost:4222"
