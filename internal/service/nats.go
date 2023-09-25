@@ -4,32 +4,34 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/AhegaoHD/WBTL0/internal/model"
+	"github.com/AhegaoHD/WBTL0/pkg/logger"
 	"github.com/nats-io/stan.go"
-	"log"
 )
 
 type NatsRepo interface {
 	Subscribe(subject, queueGroup string, handler stan.MsgHandler, options ...stan.SubscriptionOption) (stan.Subscription, error)
 }
+
 type OrderCache interface {
 	Get(key string) (*model.Order, bool)
 	Set(value *model.Order)
 }
 type NatsService struct {
+	l          *logger.Logger
 	natsRepo   NatsRepo
 	orderCache OrderCache
 	orderRepo  OrderRepo
 }
 
-func NewNatsService(natsRepo NatsRepo, orderCache OrderCache, orderRepo OrderRepo) *NatsService {
-	return &NatsService{natsRepo: natsRepo, orderCache: orderCache, orderRepo: orderRepo}
+func NewNatsService(l *logger.Logger, natsRepo NatsRepo, orderCache OrderCache, orderRepo OrderRepo) *NatsService {
+	return &NatsService{l: l, natsRepo: natsRepo, orderCache: orderCache, orderRepo: orderRepo}
 }
 
 func (s *NatsService) StartListening(subject, queueGroup string) (stan.Subscription, error) {
 	return s.natsRepo.Subscribe(subject, queueGroup, func(m *stan.Msg) {
 		err := s.handleMessage(m)
 		if err != nil {
-			log.Println(err)
+			s.l.Error(err)
 		}
 	})
 }

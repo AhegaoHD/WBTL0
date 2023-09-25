@@ -42,18 +42,14 @@ func Run(cfg *config.Config) {
 	pgRepo := pgrepo.NewOrderRepo(pg)
 	cacheRepo := cache.NewOrderCache(pgRepo)
 	natsRepo := natsrepo.NewNatsRepository(sc.Conn)
-	natsService := service.NewNatsService(natsRepo, cacheRepo, pgRepo)
+	natsService := service.NewNatsService(l, natsRepo, cacheRepo, pgRepo)
 
 	_, err = natsService.StartListening("subject", "queueGroup")
 	if err != nil {
 		l.Fatal("APP - START - NATS INI PROBLEM: %v", err)
 	}
 
-	orderService := service.NewOrderService(
-		locker.New(),
-		pgRepo,
-	)
-
+	orderService := service.NewOrderService(locker.New(), pgRepo)
 	httpController := http.NewOrderController(l, orderService)
 	if err != nil {
 		l.Fatal("APP - START - CONTROLLER INIT: %v", err)

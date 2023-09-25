@@ -3,8 +3,10 @@ services:
     image: postgres:15.3
     volumes:
       - ./volumes/pgdata:/var/lib/postgresql/data
-    env_file:
-      - .env
+    environment:
+      - POSTGRES_DB = ${POSTGRES_DB}
+      - POSTGRES_USER =${DBUSER}
+      - POSTGRES_PASSWORD = ${DBPASSWORD}
     ports:
       - "5555:5432"
 
