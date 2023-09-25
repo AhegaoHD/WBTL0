@@ -17,6 +17,7 @@ type OrderCache interface {
 	Get(key string) (*model.Order, bool)
 	Set(value *model.Order)
 }
+
 type NatsService struct {
 	l          *logger.Logger
 	natsRepo   NatsRepo

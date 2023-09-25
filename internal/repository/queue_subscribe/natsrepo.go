@@ -1,4 +1,4 @@
-package natsrepo
+package queue_subscribe
 
 import "github.com/nats-io/stan.go"
 

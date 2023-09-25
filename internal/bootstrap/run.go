@@ -1,18 +1,17 @@
-package wb0
+package bootstrap
 
 import (
 	"context"
 	"fmt"
+	"github.com/AhegaoHD/WBTL0/internal/repository/pgrepo"
 	"os"
 	"os/signal"
 	"syscall"
 
 	"github.com/AhegaoHD/WBTL0/config"
 	"github.com/AhegaoHD/WBTL0/internal/controller/http"
-	"github.com/AhegaoHD/WBTL0/internal/locker"
 	"github.com/AhegaoHD/WBTL0/internal/repository/cache"
-	"github.com/AhegaoHD/WBTL0/internal/repository/natsrepo"
-	"github.com/AhegaoHD/WBTL0/internal/repository/pgrepo"
+	"github.com/AhegaoHD/WBTL0/internal/repository/queue_subscribe"
 	"github.com/AhegaoHD/WBTL0/internal/service"
 	"github.com/AhegaoHD/WBTL0/pkg/httpserver"
 	"github.com/AhegaoHD/WBTL0/pkg/logger"
@@ -42,7 +41,7 @@ func Run(cfg *config.Config) {
 
 	pgRepo := pgrepo.NewOrderRepo(pg)
 	cacheRepo := cache.NewOrderCache(pgRepo)
-	natsRepo := natsrepo.NewNatsRepository(sc.Conn)
+	natsRepo := queue_subscribe.NewNatsRepository(sc.Conn)
 	natsService := service.NewNatsService(l, natsRepo, cacheRepo, pgRepo)
 
 	_, err = natsService.StartListening("subject", "queueGroup")
@@ -50,7 +49,7 @@ func Run(cfg *config.Config) {
 		l.Fatal("APP - START - NATS INI PROBLEM: %v", err)
 	}
 
-	orderService := service.NewOrderService(locker.New(), pgRepo)
+	orderService := service.NewOrderService(pgRepo)
 	httpController := http.NewOrderController(l, orderService)
 	if err != nil {
 		l.Fatal("APP - START - CONTROLLER INIT: %v", err)

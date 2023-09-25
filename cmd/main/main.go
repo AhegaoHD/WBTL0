@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/AhegaoHD/WBTL0/config"
-	"github.com/AhegaoHD/WBTL0/internal/wb0"
+	"github.com/AhegaoHD/WBTL0/internal/bootstrap"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	wb0.Run(cfg)
+	bootstrap.Run(cfg)
 }
 
 func findConfigPath() string {

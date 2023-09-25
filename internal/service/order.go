@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 
-	"github.com/AhegaoHD/WBTL0/internal/locker"
 	"github.com/AhegaoHD/WBTL0/internal/model"
 )
 
@@ -18,17 +17,14 @@ type OrderRepo interface {
 }
 
 type OrderService struct {
-	locker    *locker.Locker
 	orderRepo OrderRepo
 }
 
 func NewOrderService(
-	locker *locker.Locker,
 	or OrderRepo,
 ) *OrderService {
 
 	return &OrderService{
-		locker:    locker,
 		orderRepo: or,
 	}
 }
