@@ -3,9 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+
 	"github.com/AhegaoHD/WBTL0/internal/model"
 	"github.com/nats-io/stan.go"
-	"log"
 
 	"os"
 	"strconv"
@@ -35,6 +36,7 @@ func main() {
 	}
 
 }
+
 func getExampleOrder() model.Order {
 	var ord model.Order
 	exampleFile, err := os.Open("example.json")

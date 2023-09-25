@@ -3,6 +3,10 @@ package wb0
 import (
 	"context"
 	"fmt"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/AhegaoHD/WBTL0/config"
 	"github.com/AhegaoHD/WBTL0/internal/controller/http"
 	"github.com/AhegaoHD/WBTL0/internal/locker"
@@ -14,9 +18,6 @@ import (
 	"github.com/AhegaoHD/WBTL0/pkg/logger"
 	"github.com/AhegaoHD/WBTL0/pkg/nats"
 	"github.com/AhegaoHD/WBTL0/pkg/postgres"
-	"os"
-	"os/signal"
-	"syscall"
 )
 
 func Run(cfg *config.Config) {

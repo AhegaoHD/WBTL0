@@ -18,6 +18,7 @@ func main() {
 
 	wb0.Run(cfg)
 }
+
 func findConfigPath() string {
 	const (
 		devConfig  = "config/dev.config.toml"

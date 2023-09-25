@@ -13,10 +13,18 @@ ij_formatter_off_tag = @formatter:off
 ij_formatter_on_tag = @formatter:on
 ij_formatter_tags_enabled = true
 ij_smart_tabs = false
-ij_visual_guides = none
+ij_visual_guides = true
 ij_wrap_on_typing = false
 
 [{*.go,*.go2}]
+blank_lines_after_imports = 2
+blank_lines_after_declarations = 1
+blank_lines_before_block_comments = 1
+blank_lines_before_comments = 2
+blank_lines_between_blocks = 2
+blank_lines_between_functions = 1
+blank_lines_around_functions = 1
+blank_lines_around_functions_enabled = true
 indent_style = tab
 ij_continuation_indent_size = 4
 ij_go_GROUP_CURRENT_PROJECT_IMPORTS = false

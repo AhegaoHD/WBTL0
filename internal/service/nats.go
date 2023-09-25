@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/AhegaoHD/WBTL0/internal/model"
 	"github.com/AhegaoHD/WBTL0/pkg/logger"
 	"github.com/nats-io/stan.go"

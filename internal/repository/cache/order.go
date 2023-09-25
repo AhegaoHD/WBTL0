@@ -2,8 +2,9 @@ package cache
 
 import (
 	"context"
-	"github.com/AhegaoHD/WBTL0/internal/model"
 	"sync"
+
+	"github.com/AhegaoHD/WBTL0/internal/model"
 )
 
 type OrderRepo interface {
